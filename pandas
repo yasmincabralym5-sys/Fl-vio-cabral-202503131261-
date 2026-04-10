@@ -1,1 +1,47 @@
 
+import pandas as pd
+
+── 1. CARREGAR DATASET ──────────────────────────────
+try:
+    df = pd.read_csv("books.csv")
+    print("📂 Dataset carregado com sucesso!")
+except:
+    print("⚠️ Arquivo não encontrado. Criando dataset de exemplo...")
+
+    dados = {
+        "titulo": ["Livro A", "Livro B", "Livro C", "Livro D"],
+        "autor": ["Autor 1", "Autor 2", "Autor 1", "Autor 3"],
+        "isbn": ["111", "222", "333", "444"],
+        "paginas": [100, 200, 300, 150],
+        "ano": ["2000", "1999", "2010", "2005"]  # propositalmente como texto
+    }
+
+    df = pd.DataFrame(dados)
+
+Mostrar primeiras linhas
+print("\n🔹 HEAD:")
+print(df.head())
+
+
+── 2. TIPOS DE DADOS ────────────────────────────────
+print("\n🔹 INFO:")
+df.info()
+
+👉 Detectar coluna com tipo incorreto
+print("\n🔹 Tipos de dados:")
+print(df.dtypes)
+
+
+── 3. VALORES ÚNICOS ────────────────────────────────
+print("\n🔹 Valores únicos por coluna:")
+print(df.nunique())
+
+
+── 4. VALORES NULOS ────────────────────────────────
+print("\n🔹 Valores nulos:")
+print(df.isnull().sum())
+
+
+── 5. TOP 10 AUTORES ───────────────────────────────
+print("\n🔹 Top 10 autores com mais livros:")
+print(df["autor"].value_counts().head(10))
