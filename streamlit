@@ -1,0 +1,45 @@
+#nível 1
+import streamlit as st
+import pandas as pd
+
+df = pd.read_csv("dados.csv")
+
+Criar filtro na sidebar
+categoria = st.sidebar.selectbox(
+    "Selecione a categoria de salário",
+    df["categoria_salario"].unique()
+)
+
+Filtrar dados
+df_filtrado = df[df["categoria_salario"] == categoria]
+
+st.dataframe(df_filtrado)
+
+#nível 2
+
+import plotly.express as px
+
+fig = px.bar(
+    df_filtrado,
+    x="categoria_salario",
+    y="salario",
+    color="categoria_salario",
+    hover_data=["cargo", "empresa"]
+)
+
+st.plotly_chart(fig)
+
+#nível 3
+arquivo = st.file_uploader("Envie um arquivo CSV", type="csv")
+
+if arquivo is not None:
+    df = pd.read_csv(arquivo)
+
+    categoria = st.sidebar.selectbox(
+        "Categoria",
+        df["categoria_salario"].unique()
+    )
+
+    df_filtrado = df[df["categoria_salario"] == categoria]
+
+    st.dataframe(df_filtrado)
